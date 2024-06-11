@@ -1,0 +1,38 @@
+.Home-1 {
+    height: 500px;
+    z-index: 4;
+    position: relative;
+}
+
+.Home-1::before {
+    content: "";
+    position: absolute;
+    filter: brightness(60%);
+    background-image: url('/src/website/assets/Home 1.jpg');
+    height: 500px;
+    width: 100%;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    z-index: -1;
+}
+
+@media (max-width:990px) {
+    .Home-1 {
+        height: 400px;
+    }
+
+    .Home-1::before {
+        height: 400px;
+    }
+}
+
+@media (max-width:770px) {
+    .Home-1 {
+        height: 300px;
+    }
+
+    .Home-1::before {
+        height: 300px;
+    }
+}
