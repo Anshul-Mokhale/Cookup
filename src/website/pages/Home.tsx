@@ -1,6 +1,6 @@
 import React from "react";
 import Layout from "../Layout";
-import "../css/home.css";
+import "../css/Home.css"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass, faPlus } from '@fortawesome/free-solid-svg-icons';
 import recipe1 from "../assets/recipe (1).jpg";
