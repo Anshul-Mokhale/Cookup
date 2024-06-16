@@ -50,10 +50,10 @@ const Navbar: React.FC = () => {
 
                 </div>
                 <div className="hidden md:flex items-center space-x-2">
-                    <NavLink to="/login" className="text-boxdark-2 dark:text-white border-2 border-boxdark-2 dark:border-white py-1 px-3 rounded-md hover:border-webred hover:bg-webred">
+                    <NavLink to="/user/sign-in" className="text-boxdark-2 dark:text-white border-2 border-boxdark-2 dark:border-white py-1 px-3 rounded-md hover:border-webred hover:bg-webred">
                         Login
                     </NavLink>
-                    <NavLink to="/signup" className="text-boxdark-2 dark:text-white border-2 border-boxdark-2 dark:border-white py-1 px-3 rounded-md hover:border-webred hover:bg-webred">
+                    <NavLink to="/user/sign-up" className="text-boxdark-2 dark:text-white border-2 border-boxdark-2 dark:border-white py-1 px-3 rounded-md hover:border-webred hover:bg-webred">
                         Signup
                     </NavLink>
                 </div>

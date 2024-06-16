@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
-import { Route, Routes, useLocation } from 'react-router-dom';
+import { Route, Routes, useLocation, useParams } from 'react-router-dom';
 
 import Loader from './common/Loader';
 import PageTitle from './components/PageTitle';
 import SignIn from './pages/Authentication/SignIn';
 import SignUp from './pages/Authentication/SignUp';
-import Calendar from './pages/Calendar';
 import Chart from './pages/Chart';
 import ECommerce from './pages/Dashboard/ECommerce';
 import FormElements from './pages/Form/FormElements';
@@ -16,6 +15,13 @@ import Tables from './pages/Tables';
 import Alerts from './pages/UiElements/Alerts';
 import Buttons from './pages/UiElements/Buttons';
 import Home from './website/pages/Home';
+import Allsaved from './pages/Dashboard/Allsaved';
+import PostNow from './pages/PostNow';
+import ViewPost from './pages/ViewPost';
+import UpdateImage from './pages/UpdateImage';
+import UpdateDetails from './pages/UpdateDetails';
+import ViewSaved from './pages/ViewSaved';
+
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -29,6 +35,25 @@ function App() {
     setTimeout(() => setLoading(false), 1000);
   }, []);
 
+  const PostView = () => {
+    const { id } = useParams();
+    return (
+      <>
+        <PageTitle title={`${id} | Cookup`} />
+        <ViewPost />
+      </>
+    );
+  };
+
+  const PostSavedView = () => {
+    const { id } = useParams();
+    return (
+      <>
+        <PageTitle title={`${id} | Cookup`} />
+        <ViewSaved />
+      </>
+    );
+  };
   return loading ? (
     <Loader />
   ) : (
@@ -44,20 +69,66 @@ function App() {
           }
         />
         <Route
-          path="/calendar"
+          path="/user/dashboard"
           element={
             <>
-              <PageTitle title="Calendar | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              <Calendar />
+              <PageTitle title="All Posts | Cookup" />
+              <ECommerce />
+            </>
+          }
+        />
+
+        <Route
+          path="/user/saved-posts"
+          element={
+            <>
+              <PageTitle title="Saved Posts | Cookup" />
+              <Allsaved />
             </>
           }
         />
         <Route
-          path="/profile"
+          path="/user/profile"
           element={
             <>
-              <PageTitle title="Profile | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+              <PageTitle title="Profile | Cookup" />
               <Profile />
+            </>
+          }
+        />
+
+        <Route
+          path="/user/post/post-now"
+          element={
+            <>
+              <PageTitle title="Create New Post | Cookup" />
+              <PostNow />
+            </>
+          }
+        />
+        <Route
+          path="/user/post/view-post/:id"
+          element={<PostView />}
+        />
+        <Route
+          path="/user/saved-post/view-post/:id"
+          element={<PostSavedView />}
+        />
+        <Route
+          path="/user/post/update-image/:id"
+          element={
+            <>
+              <PageTitle title="Update Post Image | Cookup" />
+              <UpdateImage />
+            </>
+          }
+        />
+        <Route
+          path="/user/post/update-details/:id"
+          element={
+            <>
+              <PageTitle title="Update Post Details | Cookup" />
+              <UpdateDetails />
             </>
           }
         />
@@ -125,19 +196,19 @@ function App() {
           }
         />
         <Route
-          path="/auth/signin"
+          path="/user/sign-in"
           element={
             <>
-              <PageTitle title="Signin | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+              <PageTitle title="Signin | Cookup" />
               <SignIn />
             </>
           }
         />
         <Route
-          path="/auth/signup"
+          path="/user/sign-up"
           element={
             <>
-              <PageTitle title="Signup | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+              <PageTitle title="Signup | Cookup" />
               <SignUp />
             </>
           }

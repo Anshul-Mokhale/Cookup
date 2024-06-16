@@ -116,7 +116,7 @@ const Home: React.FC = () => {
                 <div className="Home-4 p-6">
                     <div className="flex flex-col items-center justify-between bg-white md:flex-row dark:bg-boxdark p-6">
                         <div>
-                            <img src={adver} alt="module image" className="w-96" />
+                            <img src={adver} alt="module image" className="w-full md:w-96" />
                         </div>
                         <div className="flex flex-col">
                             <h1 className="text-3xl font-bold">Share Your Culinary Creations!</h1>
