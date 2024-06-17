@@ -18,6 +18,10 @@ const DropdownUser = () => {
     console.log("logout");
   }
 
+
+  const user = localStorage.getItem('user');
+  const parsedUser = user ? JSON.parse(user) : null;
+
   // close on click outside
   useEffect(() => {
     const clickHandler = ({ target }: MouseEvent) => {
@@ -54,7 +58,7 @@ const DropdownUser = () => {
       >
         <span className="hidden text-right lg:block">
           <span className="block text-sm font-medium text-black dark:text-white">
-            Thomas Anree
+            {parsedUser.name}
           </span>
           <span className="block text-xs">UX Designer</span>
         </span>
