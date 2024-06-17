@@ -7,7 +7,7 @@ import SignIn from './pages/Authentication/SignIn';
 import SignUp from './pages/Authentication/SignUp';
 
 import ECommerce from './pages/Dashboard/ECommerce';
-
+import PrivateRoute from './PrivateRoute';
 import Profile from './pages/Profile';
 import Home from './website/pages/Home';
 import Allsaved from './pages/Dashboard/Allsaved';
@@ -63,15 +63,28 @@ function App() {
             </>
           }
         />
+        {/* 
         <Route
-          path="/user/dashboard"
+          path='/dashboard'
           element={
             <>
-              <PageTitle title="All Posts | Cookup" />
+              <PageTitle title="Mamta medical | Dashboard" />
               <ECommerce />
             </>
           }
-        />
+        /> */}
+
+        <Route element={<PrivateRoute />}>
+          <Route
+            path="/user/dashboard"
+            element={
+              <>
+                <PageTitle title="All Posts | Cookup" />
+                <ECommerce />
+              </>
+            }
+          />
+        </Route>
 
         <Route
           path="/user/saved-posts"
