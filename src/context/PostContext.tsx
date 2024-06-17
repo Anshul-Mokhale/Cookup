@@ -16,12 +16,12 @@ export const PostProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     const createPost = async (recipeImage: File, title: string, description: string, ingredient: string, steps: string, category: string): Promise<{ status: string, message?: string, name?: string }> => {
         try {
             const formData = new FormData();
+            formData.append('recipeImage', recipeImage);
             formData.append('title', title);
             formData.append('description', description);
             formData.append('ingredient', ingredient);
             formData.append('steps', steps);
             formData.append('category', category);
-            formData.append('recipeImage', recipeImage);
 
             console.log(formData);
 
@@ -30,9 +30,9 @@ export const PostProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
                 body: formData,
             });
 
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
+            // if (!response.ok) {
+            //     throw new Error('Network response was not ok');
+            // }
             const data = await response.json();
 
             if (data.success === true) {
