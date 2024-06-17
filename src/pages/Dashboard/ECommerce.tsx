@@ -86,7 +86,6 @@ const ECommerce: React.FC = () => {
       ) : (
         ''
       )}
-      );
       <div className="max-w-full overflow-x-auto">
         <table className="w-full table-auto">
           <thead>
