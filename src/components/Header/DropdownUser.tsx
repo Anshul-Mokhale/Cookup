@@ -15,6 +15,7 @@ const DropdownUser = () => {
   const logOt = async () => {
     setIsAuthenticated(false);
     logout();
+    console.log("logout");
   }
 
   // close on click outside
