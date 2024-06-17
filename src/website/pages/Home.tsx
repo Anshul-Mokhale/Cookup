@@ -97,7 +97,7 @@ const Home: React.FC = () => {
                                         src={recipe.recipeImage}
                                         alt={recipe.title}
                                         className="w-full h-auto object-cover"
-                                        style={{ aspectRatio: "5/4" }}
+                                    // style={{ aspectRatio: "5/4" }}
                                     />
                                     <h4 className="text-center font-bold mt-2">{recipe.title}</h4>
                                 </Link>
