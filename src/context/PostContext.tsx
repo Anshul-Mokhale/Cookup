@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect, useContext, ReactNode } from 'react';
+import React, { createContext, useContext, ReactNode } from 'react';
 
 interface Post {
     _id: number;
@@ -14,6 +14,9 @@ const PostContext = createContext<PostContextType | undefined>(undefined);
 export const PostProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
     const createPost = async (recipeImage: File, title: string, description: string, ingredient: string, steps: string, category: string): Promise<{ status: string, message?: string, name?: string }> => {
+        const user = localStorage.getItem('user');
+        const parsedUser = user ? JSON.parse(user) : null;
+
         try {
             const formData = new FormData();
             formData.append('recipeImage', recipeImage);
@@ -22,6 +25,7 @@ export const PostProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             formData.append('ingredient', ingredient);
             formData.append('steps', steps);
             formData.append('category', category);
+            formData.append('userId', parsedUser._id);
 
             console.log(formData);
 
