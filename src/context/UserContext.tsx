@@ -33,7 +33,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
     const login = async (email: string, password: string): Promise<{ status: string, message?: string, name?: string }> => {
         try {
-            const response = await fetch('https://medical-backend-rx5m.onrender.com/api/v1/users/login', {
+            const response = await fetch('https://cookup-backend.onrender.com/api/v1/users/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -86,10 +86,10 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             if (data.success === true) {
                 console.log(data);
                 localStorage.setItem('newRegister', 'ok');
-                return { status: 'success' };
+                return data;
             } else {
                 console.log(data.message);
-                return { status: 'error', message: data.message || 'Registration failed' };
+                return data;
             }
         } catch (error: any) {
             return { status: 'error', message: error.message || 'An error occurred during registration' };
