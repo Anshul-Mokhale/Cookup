@@ -23,6 +23,8 @@ export const PostProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             formData.append('category', category);
             formData.append('recipeImage', recipeImage);
 
+            console.log(formData);
+
             const response = await fetch('https://cookup-backend.onrender.com/api/v1/recipe/create-post', {
                 method: 'POST',
                 body: formData,
@@ -34,6 +36,7 @@ export const PostProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             const data = await response.json();
 
             if (data.success === true) {
+                console.log(data);
                 return data;
             } else {
                 console.log(data.message);
@@ -41,6 +44,7 @@ export const PostProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             }
 
         } catch (error: any) {
+            console.log(error);
             return { status: 'error', message: error.message || 'An error occurred during creating post' };
         }
     };
