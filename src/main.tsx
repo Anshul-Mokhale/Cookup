@@ -8,14 +8,17 @@ import 'jsvectormap/dist/css/jsvectormap.css';
 import 'flatpickr/dist/flatpickr.min.css';
 import { UserProvider } from './context/UserContext';
 import { AuthProvider } from './context/AuthContext';
+import { PostProvider } from './context/PostContext';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <UserProvider>
       <AuthProvider>
-        <Router>
-          <App />
-        </Router>
+        <PostProvider>
+          <Router>
+            <App />
+          </Router>
+        </PostProvider>
       </AuthProvider>
     </UserProvider>
   </React.StrictMode>,
