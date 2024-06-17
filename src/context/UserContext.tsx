@@ -55,9 +55,9 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
                 console.log(user); // Adjust token handling based on your actual response
                 setUser(user);
                 localStorage.setItem('user', JSON.stringify(user));
-                return { status: 'success', name };
+                return data;
             } else {
-                return { status: 'error', message: data.message || 'Invalid email or password' };
+                return data;
             }
         } catch (error: any) {
             return { status: 'error', message: error.message || 'An error occurred during login' };
