@@ -19,6 +19,7 @@ const SignIn: React.FC = () => {
 
     const result = await (login(email, password));
     if (result.success == true) {
+      console.log(result);
       setLoading(false);
       setIsAuthenticated(true);
       navigate('/user/dashboard');
@@ -273,7 +274,7 @@ const SignIn: React.FC = () => {
               <div className="mb-5">
                 <input
                   type="submit"
-                  value="Sign In"
+                  value={loading ? "Please wait..." : "log in"}
                   className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
                 />
               </div>
