@@ -29,7 +29,7 @@ interface Post {
 const Home: React.FC = () => {
     const { getAllPost } = usePost();
     const [recipes, setRecipes] = useState<Post[]>([]);
-    const [loading, setLoading] = useState<boolean>(true);
+    // const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
@@ -40,15 +40,15 @@ const Home: React.FC = () => {
             } else {
                 setError(result.message || 'Failed to fetch recipes');
             }
-            setLoading(false);
+            // setLoading(false);
         };
 
         fetchRecipes();
     }, [getAllPost]);
 
-    if (loading) {
-        return <div>Loading...</div>;
-    }
+    // if (loading) {
+    //     return <div>Loading...</div>;
+    // }
 
     if (error) {
         return <div>Error: {error}</div>;
