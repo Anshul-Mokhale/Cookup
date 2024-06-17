@@ -19,7 +19,7 @@ const SignIn: React.FC = () => {
 
     const result = await (login(email, password));
     if (result.success == true) {
-      console.log(result);
+      // console.log(result);
       setLoading(false);
       setIsAuthenticated(true);
       navigate('/user/dashboard');

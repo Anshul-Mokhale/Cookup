@@ -2,6 +2,7 @@ import React, { createContext, useState, useEffect, useContext, ReactNode } from
 
 // Define the shape of the user data
 interface User {
+    _id: number;
     email: string;
     token: string;
     refreshtoken: string;
@@ -48,11 +49,11 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             const data = await response.json();
 
             if (data.success === true) {
-                const { name, email } = data.data.user;  // Correctly extracting the user's full name and email
+                const { _id, name, email } = data.data.user;  // Correctly extracting the user's full name and email
                 const token = data.data.accessToken;       // Extracting the access token
                 const refreshtoken = data.data.refreshToken;
-                const user = { email, token, refreshtoken, name };
-                console.log(user); // Adjust token handling based on your actual response
+                const user = { email, token, refreshtoken, name, _id };
+                // console.log(user); // Adjust token handling based on your actual response
                 setUser(user);
                 localStorage.setItem('user', JSON.stringify(user));
                 return data;
