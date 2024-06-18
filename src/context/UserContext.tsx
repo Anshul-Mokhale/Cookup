@@ -15,6 +15,7 @@ interface UserContextType {
     login: (email: string, password: string) => Promise<{ status: string, message?: string, name?: string }>;
     register: (name: string, email: string, password: string, image: File) => Promise<{ status: string, message?: string }>;
     logout: () => void;
+    getUser: (userId: string,) => Promise<{ status: string, message?: string, name?: string }>;
 }
 
 // Create the UserContext with default values
@@ -102,8 +103,30 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         localStorage.removeItem('user');
     };
 
+    const getUser = async (userId: string): Promise<{ status: string, message?: string }> => {
+
+        if (!userId) {
+            throw new Error('No userId found');
+        }
+
+        try {
+            const response = await fetch(`https://cookup-backend.onrender.com/api/v1/users/get-user-name`, {
+                method: 'POST',
+                body: JSON.stringify({ userId })
+            });
+
+            if (!response.ok) {
+                throw new Error('No data found');
+            }
+            const data = await response.json();
+            return data;
+        } catch (error: any) {
+            return { status: 'error', message: error.message || 'An error occurred during fetching name' };
+        }
+    }
+
     return (
-        <UserContext.Provider value={{ user, login, register, logout }}>
+        <UserContext.Provider value={{ user, login, register, logout, getUser }}>
             {children}
         </UserContext.Provider>
     );

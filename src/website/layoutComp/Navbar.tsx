@@ -83,7 +83,7 @@ const Navbar: React.FC = () => {
                 <NavLink to="/recipes" className="block py-2 text-boxdark-2 dark:text-white hover:text-webred">
                     Recipes
                 </NavLink>
-                {parsedUser ? (<NavLink to="/user/sign-in" className="block  text-boxdark-2 dark:text-white border-2 border-boxdark-2 dark:border-white mb-2 py-1 px-3 rounded-md hover:border-webred hover:bg-webred">
+                {parsedUser ? (<NavLink to="/user/dashboard" className="block  text-boxdark-2 dark:text-white border-2 border-boxdark-2 dark:border-white mb-2 py-1 px-3 rounded-md hover:border-webred hover:bg-webred">
                     {parsedUser.name}
                 </NavLink>) : (<div> <NavLink to="/user/sign-in" className="block  text-boxdark-2 dark:text-white border-2 border-boxdark-2 dark:border-white mb-2 py-1 px-3 rounded-md hover:border-webred hover:bg-webred">
                     Login
