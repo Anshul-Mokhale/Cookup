@@ -97,7 +97,7 @@ export const PostProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     const viewPost = async (recipeId: string): Promise<{ status: string, message?: string, posts?: Post[] }> => {
         try {
             const response = await fetch(`https://cookup-backend.onrender.com/api/v1/recipe/view-recipe`, {
-                method: 'GET',
+                method: 'POST',
                 headers: {
                     'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjZmZDgyNzQ2ZGEwMjNjNmM2OTA4M2IiLCJlbWFpbCI6ImFuc2h1bW9raGFsZUBnbWFpbC5jb20iLCJuYW1lIjoiQW5zaHVsIE1va2hhbGUiLCJpYXQiOjE3MTg3MDUxNzQsImV4cCI6MTcxODc5MTU3NH0.kiBYMt24ZZGVXsJbI6TbnF-rsU_4uK6vbGxjUFYv2KY',
                     'Content-Type': 'application/json'
