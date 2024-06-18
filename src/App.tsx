@@ -16,6 +16,7 @@ import ViewPost from './pages/ViewPost';
 import UpdateImage from './pages/UpdateImage';
 import UpdateDetails from './pages/UpdateDetails';
 import ViewSaved from './pages/ViewSaved';
+import RecipePage from './website/pages/RecipePage';
 
 
 function App() {
@@ -40,6 +41,15 @@ function App() {
     );
   };
 
+  const RecipeWatch = () => {
+    const { id } = useParams();
+    return (
+      <>
+        <PageTitle title={`${id} | Cookup`} />
+        <RecipePage />
+      </>
+    );
+  };
   const PostSavedView = () => {
     const { id } = useParams();
     return (
@@ -121,6 +131,10 @@ function App() {
         <Route
           path="/user/saved-post/view-post/:id"
           element={<PostSavedView />}
+        />
+        <Route
+          path="/view-recipe/:id"
+          element={<RecipeWatch />}
         />
         <Route
           path="/user/post/update-image/:id"

@@ -92,7 +92,7 @@ const Home: React.FC = () => {
                     <div className="my-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4">
                         {recipes.slice(0, 8).map((recipe) => (
                             <div key={recipe._id} className="h-full p-4 bg-white dark:bg-boxdark">
-                                <Link to="#">
+                                <Link to={`/view-recipe/${recipe._id}`}>
                                     <img
                                         src={recipe.recipeImage}
                                         alt={recipe.title}
