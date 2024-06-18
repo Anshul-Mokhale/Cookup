@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { usePost } from "../../context/PostContext";
+import Layout from "../Layout";
 
 const RecipePage: React.FC = () => {
     const { id } = useParams<{ id: string }>();
@@ -47,16 +48,22 @@ const RecipePage: React.FC = () => {
 
     return (
         <>
-            <h1>{recipe.title}</h1>
-            <img src={recipe.recipeImage} alt={recipe.title} />
-            <p>{recipe.description}</p>
-            <h2>Ingredients</h2>
-            <p>{recipe.ingredient}</p>
-            <h2>Steps</h2>
-            <p>{recipe.steps}</p>
-            <p>Category: {recipe.category}</p>
-            <p>Created At: {new Date(recipe.createdAt).toLocaleDateString()}</p>
-            <p>Updated At: {new Date(recipe.updatedAt).toLocaleDateString()}</p>
+            <Layout>
+                <div className="text-black dark:text-white dark:bg-boxdark m-6 p-2">
+                    <h1 className="text-center font-bold text-4xl">{recipe.title}</h1>
+
+                    <img src={recipe.recipeImage} alt={recipe.title} />
+                    <p>{recipe.description}</p>
+                    <h2>Ingredients</h2>
+                    <p>{recipe.ingredient}</p>
+                    <h2>Steps</h2>
+                    <p>{recipe.steps}</p>
+                    <p>Category: {recipe.category}</p>
+                </div>
+                {/* 
+                <p>Created At: {new Date(recipe.createdAt).toLocaleDateString()}</p>
+                <p>Updated At: {new Date(recipe.updatedAt).toLocaleDateString()}</p> */}
+            </Layout>
         </>
     );
 };
