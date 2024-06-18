@@ -8,9 +8,9 @@ import { faBookmark } from "@fortawesome/free-regular-svg-icons";
 import { useUser } from "../../context/UserContext";
 
 const RecipePage: React.FC = () => {
-    const { getUser } = useUser();
     const { id } = useParams<{ id: string }>();
     const { viewPost } = usePost();
+    const { getUser } = useUser();
     const [recipe, setRecipe] = useState<any>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
@@ -27,8 +27,6 @@ const RecipePage: React.FC = () => {
                 const result = await viewPost(id);
                 if (result.status === "success") {
                     setRecipe(result.posts);
-                    const newResult = await getUser(recipe.userId);
-                    setUsername(newResult.name);
                 } else {
                     setError(result.message || "Failed to fetch recipe.");
                 }
@@ -42,6 +40,21 @@ const RecipePage: React.FC = () => {
         fetchRecipe();
     }, [id, viewPost]);
 
+    useEffect(() => {
+        const fetchUsername = async () => {
+            if (recipe && recipe.userId) {
+                try {
+                    const newResult = await getUser(recipe.userId);
+                    setUsername(newResult.name);
+                } catch (error: any) {
+                    setError(error.message || "An error occurred during fetching user data.");
+                }
+            }
+        };
+
+        fetchUsername();
+    }, [recipe, getUser]);
+
     if (loading) {
         return <div><Loader /></div>;
     }
@@ -50,9 +63,9 @@ const RecipePage: React.FC = () => {
         return <div>Error: {error}</div>;
     }
 
-    // if (!recipe) {
-    //     return <div>No recipe found.</div>;
-    // }
+    if (!recipe) {
+        return <div>No recipe found.</div>;
+    }
 
     // Function to convert newline characters to <br> tags
     const formatText = (text: string) => {
@@ -75,7 +88,7 @@ const RecipePage: React.FC = () => {
                         </div>
                         <div className="flex flex-row items-center justify-between py-2">
                             <h1>Posted By: {username}</h1>
-                            <p>Date:{new Date(recipe.createdAt).toLocaleDateString()}</p>
+                            <p>Date: {new Date(recipe.createdAt).toLocaleDateString()}</p>
                             <button><FontAwesomeIcon icon={faBookmark} />&nbsp; Save</button>
                         </div>
                         <div className="py-4">
