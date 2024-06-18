@@ -5,6 +5,9 @@ import { NavLink } from "react-router-dom";
 const Navbar: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
 
+    const user = localStorage.getItem('user');
+    const parsedUser = user ? JSON.parse(user) : null;
+
     const toggleMenu = () => {
         setIsOpen(!isOpen);
     };
@@ -49,14 +52,23 @@ const Navbar: React.FC = () => {
                     </NavLink>
 
                 </div>
-                <div className="hidden md:flex items-center space-x-2">
+
+
+                {parsedUser ? (
+                    <div className="hidden md:flex items-center space-x-2">
+                        <NavLink to="/user/dashboard" className="text-boxdark-2 dark:text-white border-2 border-boxdark-2 dark:border-white py-1 px-3 rounded-md hover:border-webred hover:bg-webred">
+                            {parsedUser.name}
+                        </NavLink>
+                    </div>
+                ) : (<div className="hidden md:flex items-center space-x-2">
                     <NavLink to="/user/sign-in" className="text-boxdark-2 dark:text-white border-2 border-boxdark-2 dark:border-white py-1 px-3 rounded-md hover:border-webred hover:bg-webred">
                         Login
                     </NavLink>
                     <NavLink to="/user/sign-up" className="text-boxdark-2 dark:text-white border-2 border-boxdark-2 dark:border-white py-1 px-3 rounded-md hover:border-webred hover:bg-webred">
                         Signup
                     </NavLink>
-                </div>
+                </div>)}
+
             </div>
             <div
                 className={`${isOpen ? 'max-h-screen pb-4' : 'max-h-0'
@@ -71,12 +83,17 @@ const Navbar: React.FC = () => {
                 <NavLink to="/recipes" className="block py-2 text-boxdark-2 dark:text-white hover:text-webred">
                     Recipes
                 </NavLink>
-                <NavLink to="/login" className="block  text-boxdark-2 dark:text-white border-2 border-boxdark-2 dark:border-white mb-2 py-1 px-3 rounded-md hover:border-webred hover:bg-webred">
+                {parsedUser ? (<NavLink to="/user/sign-in" className="block  text-boxdark-2 dark:text-white border-2 border-boxdark-2 dark:border-white mb-2 py-1 px-3 rounded-md hover:border-webred hover:bg-webred">
+                    {parsedUser.name}
+                </NavLink>) : (<div> <NavLink to="/user/sign-in" className="block  text-boxdark-2 dark:text-white border-2 border-boxdark-2 dark:border-white mb-2 py-1 px-3 rounded-md hover:border-webred hover:bg-webred">
                     Login
                 </NavLink>
-                <NavLink to="/signup" className="block  text-boxdark-2 dark:text-white border-2 border-boxdark-2 dark:border-white py-1 px-3 rounded-md hover:border-webred hover:bg-webred">
-                    Signup
-                </NavLink>
+                    <NavLink to="/user/sign-up" className="block  text-boxdark-2 dark:text-white border-2 border-boxdark-2 dark:border-white py-1 px-3 rounded-md hover:border-webred hover:bg-webred">
+                        Signup
+                    </NavLink>
+                </div>)}
+
+
             </div>
         </nav>
     );

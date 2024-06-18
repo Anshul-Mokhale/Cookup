@@ -68,7 +68,7 @@ const RecipePage: React.FC = () => {
                             <img src={recipe.recipeImage} alt={recipe.title} />
                             <h1 className="text-center font-bold text-4xl">{recipe.title}</h1>
                         </div>
-                        <div className="flex flex-row items-center justify-between">
+                        <div className="flex flex-row items-center justify-between py-2">
                             <p>Date:{new Date(recipe.createdAt).toLocaleDateString()}</p>
                             <button><FontAwesomeIcon icon={faBookmark} />&nbsp; Save</button>
                         </div>
