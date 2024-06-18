@@ -45,7 +45,7 @@ const RecipePage: React.FC = () => {
             if (recipe && recipe.userId) {
                 try {
                     const newResult = await getUser(recipe.userId);
-                    setUsername(newResult.name);
+                    setUsername(newResult);
                 } catch (error: any) {
                     setError(error.message || "An error occurred during fetching user data.");
                 }
