@@ -49,20 +49,24 @@ const RecipePage: React.FC = () => {
     return (
         <>
             <Layout>
-                <div className="text-black dark:text-white dark:bg-boxdark m-6 p-2">
-                    <h1 className="text-center font-bold text-4xl">{recipe.title}</h1>
+                <div className="dark:bg-boxdark-2">
 
-                    <img src={recipe.recipeImage} alt={recipe.title} />
-                    <p>{recipe.description}</p>
-                    <h2>Ingredients</h2>
-                    <p>{recipe.ingredient}</p>
-                    <h2>Steps</h2>
-                    <p>{recipe.steps}</p>
-                    <p>Category: {recipe.category}</p>
-                </div>
-                {/* 
+
+                    <div className="text-black dark:text-white dark:bg-boxdark m-6 p-2">
+                        <h1 className="text-center font-bold text-4xl">{recipe.title}</h1>
+
+                        <img src={recipe.recipeImage} alt={recipe.title} />
+                        <p>{recipe.description}</p>
+                        <h2>Ingredients</h2>
+                        <p>{recipe.ingredient}</p>
+                        <h2>Steps</h2>
+                        <p>{recipe.steps}</p>
+                        <p>Category: {recipe.category}</p>
+                    </div>
+                    {/* 
                 <p>Created At: {new Date(recipe.createdAt).toLocaleDateString()}</p>
                 <p>Updated At: {new Date(recipe.updatedAt).toLocaleDateString()}</p> */}
+                </div>
             </Layout>
         </>
     );
