@@ -63,9 +63,9 @@ const RecipePage: React.FC = () => {
         return <div>Error: {error}</div>;
     }
 
-    if (!recipe) {
-        return <div>No recipe found.</div>;
-    }
+    // if (!recipe) {
+    //     return <div>No recipe found.</div>;
+    // }
 
     // Function to convert newline characters to <br> tags
     const formatText = (text: string) => {
