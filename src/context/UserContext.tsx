@@ -53,9 +53,9 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
                 const { _id, avatar, name, email } = data.data.user;  // Correctly extracting the user's full name and email
                 const token = data.data.accessToken;       // Extracting the access token
 
-                const locuser = { email, token, avatar, name, _id };
+                const user = { email, token, avatar, name, _id };
                 // console.log(user); // Adjust token handling based on your actual response
-                setUser(locuser);
+                setUser(user);
                 localStorage.setItem('user', JSON.stringify(user));
                 return data;
             } else {
