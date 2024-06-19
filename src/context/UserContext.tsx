@@ -1,16 +1,17 @@
-import React, { createContext, useEffect, useContext, ReactNode } from 'react';
+import React, { createContext, useState, useEffect, useContext, ReactNode } from 'react';
 
 // Define the shape of the user data
 interface User {
     _id: number;
     email: string;
+    token: string;
     avatar: string;
-    refreshtoken: string;
     name: string;
 }
 
 // Define the shape of the context value
 interface UserContextType {
+    user: User | null;
     login: (email: string, password: string) => Promise<{ status: string, message?: string, name?: string }>;
     register: (name: string, email: string, password: string, image: File) => Promise<{ status: string, message?: string }>;
     logout: () => void;
@@ -22,14 +23,14 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 
 // UserProvider component to wrap around the app
 export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-    // const [user, setUser] = useState<User | null>(null);
+    const [user, setUser] = useState<User | null>(null);
 
     useEffect(() => {
         // Load user data from localStorage if available
-        // const storedUser = localStorage.getItem('user');
-        // if (storedUser) {
-        //     setUser(JSON.parse(storedUser));
-        // }
+        const storedUser = localStorage.getItem('user');
+        if (storedUser) {
+            setUser(JSON.parse(storedUser));
+        }
     }, []);
 
     const login = async (email: string, password: string): Promise<{ status: string, message?: string, name?: string }> => {
@@ -51,9 +52,10 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             if (data.success === true) {
                 const { _id, name, email, avatar } = data.data.user;  // Correctly extracting the user's full name and email
                 const token = data.data.accessToken;       // Extracting the access token
-                const user = { email, token, avatar, name, _id };
+
+                const locuser = { email, token, avatar, name, _id };
                 // console.log(user); // Adjust token handling based on your actual response
-                // setUser(user);
+                setUser(locuser);
                 localStorage.setItem('user', JSON.stringify(user));
                 return data;
             } else {
@@ -97,7 +99,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     };
 
     const logout = () => {
-        // setUser(null);
+        setUser(null);
         localStorage.removeItem('user');
     };
 
@@ -130,7 +132,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
 
     return (
-        <UserContext.Provider value={{ login, register, logout, getUser }}>
+        <UserContext.Provider value={{ user, login, register, logout, getUser }}>
             {children}
         </UserContext.Provider>
     );
