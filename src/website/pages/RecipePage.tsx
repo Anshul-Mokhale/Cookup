@@ -83,7 +83,7 @@ const RecipePage: React.FC = () => {
             <Layout>
                 <div className="dark:bg-boxdark-2 p-6">
                     <div className="bg-white text-black dark:text-white dark:bg-boxdark p-4">
-                        <div className="flex flex-row items-center justify-between md:flex-col items-center justify-center">
+                        <div className="flex flex-col items-center justify-center md:flex-col md:items-center md:justify-between ">
                             <img src={recipe.recipeImage} alt={recipe.title} />
                             <h1 className="text-center font-bold text-4xl">{recipe.title}</h1>
                         </div>
