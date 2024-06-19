@@ -10,21 +10,6 @@ const ECommerce: React.FC = () => {
   const { viewAllPostedRecipes } = usePost();
 
   useEffect(() => {
-    if (localStorage.getItem('action') === 'success') {
-      setMsg('Post created successfully');
-      localStorage.removeItem('action');
-
-      // Hide the message after 3 seconds
-      const timer = setTimeout(() => {
-        setMsg('');
-      }, 3000);
-
-      // Clean up the timer when the component unmounts or when the message changes
-      return () => clearTimeout(timer);
-    }
-  }, []);
-
-  useEffect(() => {
     const fetchPosts = async () => {
       try {
         const { status, message, posts } = await viewAllPostedRecipes();
@@ -44,6 +29,19 @@ const ECommerce: React.FC = () => {
 
     fetchPosts();
   }, [viewAllPostedRecipes]);
+
+  useEffect(() => {
+    if (localStorage.getItem('action') === 'success') {
+      setMsg('Post created successfully');
+      localStorage.removeItem('action');
+
+      const timer = setTimeout(() => {
+        setMsg('');
+      }, 3000);
+
+      return () => clearTimeout(timer);
+    }
+  }, []);
 
   return (
     <DefaultLayout>

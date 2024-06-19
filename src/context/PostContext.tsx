@@ -124,10 +124,9 @@ export const PostProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     };
 
     const viewAllPostedRecipes = async (): Promise<{ status: string, message?: string, posts?: Post[] }> => {
-
         const userData = localStorage.getItem('user');
         const parsedUser = userData ? JSON.parse(userData) : null;
-        const token = parsedUser._id;
+        const token = parsedUser?._id;
 
         try {
             const response = await fetch(`https://cookup-backend.onrender.com/api/v1/recipe/get-user-post`, {
@@ -135,7 +134,7 @@ export const PostProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ token })
+                body: JSON.stringify({ userId: token }) // Sending userId instead of token
             });
 
             if (!response.ok) {
@@ -149,6 +148,7 @@ export const PostProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             return { status: 'error', message: error.message || 'An error occurred during fetching data' };
         }
     };
+
 
 
     return (
