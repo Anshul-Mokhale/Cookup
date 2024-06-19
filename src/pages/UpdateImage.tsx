@@ -1,9 +1,10 @@
 import React, { useState, useRef } from "react";
 import DefaultLayout from "../layout/DefaultLayout";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Modal from 'react-modal';
 import Cropper from 'cropperjs';
 import 'cropperjs/dist/cropper.css';
+import { usePost } from "../context/PostContext";
 
 Modal.setAppElement('#root');
 
@@ -92,11 +93,14 @@ const ImageCropperPopup: React.FC<{ imageSrc: string, onCrop: (croppedImage: str
 
 const UpdateImage: React.FC = () => {
     const { id } = useParams();
-
+    const [recipeId, setRecipeId] = useState<any>();
     const [imageSrc, setImageSrc] = useState<string>('');
     const [croppedImage, setCroppedImage] = useState<string>('');
     const fileInputRef = useRef<HTMLInputElement | null>(null);
-
+    const [errorMessage, setErrorMessage] = useState<string>('');
+    const { udpatePostImage } = usePost();
+    const navigate = useNavigate();
+    setRecipeId(id);
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         const reader = new FileReader();
@@ -138,6 +142,29 @@ const UpdateImage: React.FC = () => {
     const handleClose = () => {
         setImageSrc('');
     };
+
+    const handleSubmit = async (event: React.FormEvent) => {
+        event.preventDefault();
+
+        if (!fileInputRef.current?.files?.[0]) {
+            setErrorMessage("All fields are required.");
+            return;
+        }
+
+        const recipeImage = fileInputRef.current.files[0];
+
+        const response = await udpatePostImage(recipeImage, recipeId);
+
+        if (response.status === "error") {
+            setErrorMessage(response.message || "An error occurred during creating post.");
+        } else {
+            // handle successful post creation (e.g., redirect to the posts list, reset the form, etc.)
+            console.log("Post created successfully:", response);
+            console.log(errorMessage);
+            localStorage.setItem('action', 'success');
+            navigate('/user/dashboard');
+        }
+    };
     return (
         <DefaultLayout>
             <>
@@ -147,7 +174,7 @@ const UpdateImage: React.FC = () => {
                             Update Recipe Image
                         </h3>
                     </div>
-                    <form action="#">
+                    <form onSubmit={handleSubmit}>
                         <div className="p-6.5">
                             <div className="mb-4.5">
                                 <label className="mb-3 block text-black dark:text-white">
@@ -169,7 +196,7 @@ const UpdateImage: React.FC = () => {
                             )}
                         </div>
                         <div className="p-6.5">
-                            <button className="flex w-full items-center justify-center rounded bg-primary p-3 font-medium text-gray hover:bg-opacity-90">
+                            <button type="submit" className="flex w-full items-center justify-center rounded bg-primary p-3 font-medium text-gray hover:bg-opacity-90">
                                 Upload
                             </button>
                         </div>

@@ -29,6 +29,7 @@ interface PostContextType {
     viewAllPostedRecipes: () => Promise<{ status: string; message?: string; posts?: Post[] }>;
     deletePost: (recipeId: string) => Promise<{ status: string, message?: string, name?: string }>;
     searchQuer: (query: string) => Promise<{ status: string; message?: string; posts?: Post[] }>;
+    udpatePostImage: (image: File, recipeId: string) => Promise<{ status: string, message?: string, name?: string }>;
 }
 
 // Create the PostContext
@@ -201,11 +202,49 @@ export const PostProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         }
     };
 
+    const udpatePostImage = async (image: File, recipeId: string): Promise<{ status: string, message?: string, name?: string }> => {
+        const user = localStorage.getItem('user');
+        const parsedUser = user ? JSON.parse(user) : null;
+        const token = parsedUser.token;
+
+        try {
+            const formData = new FormData();
+            formData.append('updatedImage', image);
+            formData.append('recipe_id', recipeId);
+
+            const response = await fetch('https://cookup-backend.onrender.com/api/v1/recipe/update-image', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            const data = await response.json();
+            return {
+                status: 'success',
+                name: data.name, // Assuming the response contains the name of the updated image
+            };
+
+        }
+        catch (error: any) {
+            return {
+                status: 'error',
+                message: error.message
+            };
+        }
+    }
+
+
 
 
 
     return (
-        <PostContext.Provider value={{ createPost, getAllPost, viewPost, viewAllPostedRecipes, deletePost, searchQuer }}>
+        <PostContext.Provider value={{ createPost, getAllPost, viewPost, viewAllPostedRecipes, deletePost, searchQuer, udpatePostImage }}>
             {children}
         </PostContext.Provider>
     );
