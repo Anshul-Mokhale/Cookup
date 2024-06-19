@@ -3,8 +3,8 @@ import { useParams } from "react-router-dom";
 import { usePost } from "../../context/PostContext";
 import Layout from "../Layout";
 import Loader from "../../common/Loader";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBookmark } from "@fortawesome/free-regular-svg-icons";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faBookmark } from "@fortawesome/free-regular-svg-icons";
 import { useUser } from "../../context/UserContext";
 
 const RecipePage: React.FC = () => {

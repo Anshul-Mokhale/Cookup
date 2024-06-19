@@ -115,7 +115,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             }
 
             const data = await response.json();
-            return { status: 'success', name: data.data.name };
+            return { status: 'success', name: data.data };
         } catch (error: any) {
             return { status: 'error', message: error.message || 'An error occurred during fetching name' };
         }
