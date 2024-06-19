@@ -12,7 +12,7 @@ import { faMagnifyingGlass, faPlus } from '@fortawesome/free-solid-svg-icons';
 // import recipe7 from "../assets/recipe (7).jpg";
 // import recipe8 from "../assets/recipe (8).jpg";
 import adver from "../assets/cooking ad.svg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { usePost } from "../../context/PostContext";
 interface Post {
     _id: string;
@@ -31,6 +31,12 @@ const Home: React.FC = () => {
     const [recipes, setRecipes] = useState<Post[]>([]);
     // const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
+    const [searchQuery, setSearchQuery] = useState<string>("");
+    const navigate = useNavigate();
+
+    const handleSearch = () => {
+        navigate(`/search-results?query=${encodeURIComponent(searchQuery)}`);
+    };
 
     useEffect(() => {
         const fetchRecipes = async () => {
@@ -66,8 +72,9 @@ const Home: React.FC = () => {
                         <div className="bg-white dark:bg-boxdark dark:text-white px-4 py-2 rounded-2xl">
                             <FontAwesomeIcon icon={faMagnifyingGlass} />
                             &nbsp;&nbsp;
-                            <input className="w-50 h-8 md:w-96 bg-transparent focus:border-none focus:outline-none" type="text" placeholder="Search Recipe" />
-                            <button className="bg-webred px-2 rounded-xl text-white">search</button>
+                            <input className="w-50 h-8 md:w-96 bg-transparent focus:border-none focus:outline-none" type="text" placeholder="Search Recipe" value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)} />
+                            <button className="bg-webred px-2 rounded-xl text-white" onClick={handleSearch}>search</button>
                         </div>
                     </div>
                 </div>

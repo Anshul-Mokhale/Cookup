@@ -17,6 +17,7 @@ import UpdateImage from './pages/UpdateImage';
 import UpdateDetails from './pages/UpdateDetails';
 import ViewSaved from './pages/ViewSaved';
 import RecipePage from './website/pages/RecipePage';
+import SearchResultsPage from './website/pages/SearchResultsPage';
 
 
 function App() {
@@ -151,6 +152,15 @@ function App() {
             <>
               <PageTitle title="Update Post Details | Cookup" />
               <UpdateDetails />
+            </>
+          }
+        />
+        <Route
+          path="/search-results"
+          element={
+            <>
+              <PageTitle title="Search Results | Cookup" />
+              <SearchResultsPage />
             </>
           }
         />

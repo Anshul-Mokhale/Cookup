@@ -28,6 +28,7 @@ interface PostContextType {
     viewPost: (recipeId: string) => Promise<{ status: string; message?: string; posts?: Post[] }>;
     viewAllPostedRecipes: () => Promise<{ status: string; message?: string; posts?: Post[] }>;
     deletePost: (recipeId: string) => Promise<{ status: string, message?: string, name?: string }>;
+    searchQuer: (query: string) => Promise<{ status: string; message?: string; posts?: Post[] }>;
 }
 
 // Create the PostContext
@@ -178,12 +179,33 @@ export const PostProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         }
     };
 
+    const searchQuer = async (query: string): Promise<{ status: string, message?: string, posts?: Post[] }> => {
+        try {
+            const response = await fetch(`https://cookup-backend.onrender.com/api/v1/recipe/search-recipes?query=${encodeURIComponent(query)}`);
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            const data = await response.json();
+
+            return {
+                status: 'success',
+                posts: data.recipes // Assuming the response contains an array of recipes under the key 'recipes'
+            };
+        } catch (error: any) {
+            return {
+                status: 'error',
+                message: error.message
+            };
+        }
+    };
 
 
 
 
     return (
-        <PostContext.Provider value={{ createPost, getAllPost, viewPost, viewAllPostedRecipes, deletePost }}>
+        <PostContext.Provider value={{ createPost, getAllPost, viewPost, viewAllPostedRecipes, deletePost, searchQuer }}>
             {children}
         </PostContext.Provider>
     );
