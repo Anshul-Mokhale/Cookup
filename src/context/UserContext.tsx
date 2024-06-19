@@ -50,7 +50,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             const data = await response.json();
 
             if (data.success === true) {
-                const { _id, name, email, avatar } = data.data.user;  // Correctly extracting the user's full name and email
+                const { _id, avatar, name, email } = data.data.user;  // Correctly extracting the user's full name and email
                 const token = data.data.accessToken;       // Extracting the access token
 
                 const locuser = { email, token, avatar, name, _id };
