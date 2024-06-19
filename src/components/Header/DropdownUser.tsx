@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import UserOne from '../../images/user/user-01.png';
+// import UserOne from '../../images/user/user-01.png';
 import { useUser } from '../../context/UserContext';
 import { authContext } from '../../context/AuthContext';
 
@@ -21,6 +21,7 @@ const DropdownUser = () => {
 
   const user = localStorage.getItem('user');
   const parsedUser = user ? JSON.parse(user) : null;
+  console.log(parsedUser.avatar);
 
   // close on click outside
   useEffect(() => {
