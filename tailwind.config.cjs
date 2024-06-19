@@ -249,6 +249,9 @@ module.exports = {
         'spin-2': 'spin 2s linear infinite',
         'spin-3': 'spin 3s linear infinite',
       },
+      borderRadius: {
+        'rounded-custom': '50%'
+      }
     },
   },
   plugins: [],
