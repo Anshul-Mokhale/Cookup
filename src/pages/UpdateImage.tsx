@@ -93,14 +93,13 @@ const ImageCropperPopup: React.FC<{ imageSrc: string, onCrop: (croppedImage: str
 
 const UpdateImage: React.FC = () => {
     const { id } = useParams();
-    const [recipeId, setRecipeId] = useState<any>();
     const [imageSrc, setImageSrc] = useState<string>('');
     const [croppedImage, setCroppedImage] = useState<string>('');
     const fileInputRef = useRef<HTMLInputElement | null>(null);
     const [errorMessage, setErrorMessage] = useState<string>('');
-    const { udpatePostImage } = usePost();
+    const { udpatePostImage } = usePost(); // Corrected function name
     const navigate = useNavigate();
-    setRecipeId(id);
+
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         const reader = new FileReader();
@@ -150,10 +149,12 @@ const UpdateImage: React.FC = () => {
             setErrorMessage("All fields are required.");
             return;
         }
+        const recipeId = id || ""; // Provide a default value if id is undefined
+
 
         const recipeImage = fileInputRef.current.files[0];
 
-        const response = await udpatePostImage(recipeImage, recipeId);
+        const response = await udpatePostImage(recipeImage, recipeId); // Corrected function name
 
         if (response.status === "error") {
             setErrorMessage(response.message || "An error occurred during creating post.");
@@ -165,6 +166,7 @@ const UpdateImage: React.FC = () => {
             navigate('/user/dashboard');
         }
     };
+
     return (
         <DefaultLayout>
             <>
