@@ -2,7 +2,7 @@ import React, { createContext, useState, useEffect, useContext, ReactNode } from
 
 // Define the shape of the user data
 interface User {
-    _id: number;
+    _id: string;
     email: string;
     token: string;
     avatar: string;
@@ -15,7 +15,7 @@ interface UserContextType {
     login: (email: string, password: string) => Promise<{ status: string, message?: string, name?: string }>;
     register: (name: string, email: string, password: string, image: File) => Promise<{ status: string, message?: string }>;
     logout: () => void;
-    getUser: (userId: string,) => Promise<{ status: string, message?: string, name?: string }>;
+    getUser: (userId: string) => Promise<{ status: string, message?: string, name?: string }>;
 }
 
 // Create the UserContext with default values
@@ -49,17 +49,16 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
             const data = await response.json();
 
-            if (data.success === true) {
-                const { _id, avatar, name, email } = data.data.user;  // Correctly extracting the user's full name and email
-                const token = data.data.accessToken;       // Extracting the access token
+            if (data.success) {
+                const { _id, avatar, name, email } = data.data.user;
+                const token = data.data.accessToken;
 
                 const user = { email, token, avatar, name, _id };
-                // console.log(user); // Adjust token handling based on your actual response
                 setUser(user);
                 localStorage.setItem('user', JSON.stringify(user));
-                return data;
+                return { status: 'success', name };
             } else {
-                return data;
+                return { status: 'error', message: data.message };
             }
         } catch (error: any) {
             return { status: 'error', message: error.message || 'An error occurred during login' };
@@ -85,13 +84,10 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
             const data = await response.json();
 
-            if (data.success === true) {
-                console.log(data);
-                localStorage.setItem('newRegister', 'ok');
-                return data;
+            if (data.success) {
+                return { status: 'success' };
             } else {
-                console.log(data.message);
-                return data;
+                return { status: 'error', message: data.message };
             }
         } catch (error: any) {
             return { status: 'error', message: error.message || 'An error occurred during registration' };
@@ -103,13 +99,9 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         localStorage.removeItem('user');
     };
 
-    const getUser = async (userId: string): Promise<{ status: string, message?: string }> => {
-        if (!userId) {
-            throw new Error('No userId found');
-        }
-
+    const getUser = async (userId: string): Promise<{ status: string, message?: string, name?: string }> => {
         try {
-            const response = await fetch(`https://cookup-backend.onrender.com/api/v1/users/get-user-name`, {
+            const response = await fetch('https://cookup-backend.onrender.com/api/v1/users/get-user-name', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -119,17 +111,15 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
             if (!response.ok) {
                 const errorData = await response.json();
-                console.log(errorData);
                 throw new Error(errorData.message || 'An error occurred during fetching name');
             }
 
             const data = await response.json();
-            return data.data;
+            return { status: 'success', name: data.data.name };
         } catch (error: any) {
             return { status: 'error', message: error.message || 'An error occurred during fetching name' };
         }
     };
-
 
     return (
         <UserContext.Provider value={{ user, login, register, logout, getUser }}>
