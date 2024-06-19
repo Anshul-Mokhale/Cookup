@@ -92,7 +92,7 @@ const RecipePage: React.FC = () => {
                         <div className="flex flex-row items-center justify-between py-2">
                             <h1>Posted By: {username}</h1>
                             <p>Date: {new Date(recipe.createdAt).toLocaleDateString()}</p>
-                            <button><FontAwesomeIcon icon={faBookmark} />&nbsp; Save</button>
+                            {/* <button><FontAwesomeIcon icon={faBookmark} />&nbsp; Save</button> */}
                         </div>
                         <div className="py-4">
                             <h1 className="text-black dark:text-white font-bold text-2xl mb-2">Description</h1>
