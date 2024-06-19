@@ -8,7 +8,7 @@ const SearchResultsPage: React.FC = () => {
     const [recipes, setRecipes] = useState<Post[]>([]);
     const [error, setError] = useState<string | null>(null);
     const location = useLocation();
-    const { searchQuery: searchRecipes } = usePost();
+    const { searchQuer: searchRecipes } = usePost();
 
     useEffect(() => {
         const query = new URLSearchParams(location.search).get("query") || "";
@@ -40,10 +40,10 @@ const SearchResultsPage: React.FC = () => {
                 {/* Display search results */}
                 {recipes.map((recipe) => (
                     <div key={recipe._id}>
-                        {/* Display recipe details */}
                         <img src={recipe.recipeImage} alt={recipe.title} style={{ maxWidth: "200px" }} />
                         <h2>{recipe.title}</h2>
-                        {/* Display other recipe details as needed */}
+                        <p>{recipe.description}</p>
+                        {/* Add more details if needed */}
                     </div>
                 ))}
                 {/* Display error if any */}
