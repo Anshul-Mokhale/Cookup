@@ -26,6 +26,7 @@ interface PostContextType {
     ) => Promise<{ status: string, message?: string, name?: string }>;
     getAllPost: () => Promise<{ status: string, message?: string, posts?: Post[] }>;
     viewPost: (recipeId: string) => Promise<{ status: string; message?: string; posts?: Post[] }>;
+    viewAllPostedRecipes: () => Promise<{ status: string; message?: string; posts?: Post[] }>;
 }
 
 // Create the PostContext
@@ -95,11 +96,16 @@ export const PostProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }
 
     const viewPost = async (recipeId: string): Promise<{ status: string, message?: string, posts?: Post[] }> => {
+
+        const userData = localStorage.getItem('user');
+        const parsedUser = userData ? JSON.parse(userData) : null;
+        const token = parsedUser.token;
+
         try {
             const response = await fetch(`https://cookup-backend.onrender.com/api/v1/recipe/view-recipe`, {
                 method: 'POST',
                 headers: {
-                    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjZmZDgyNzQ2ZGEwMjNjNmM2OTA4M2IiLCJlbWFpbCI6ImFuc2h1bW9raGFsZUBnbWFpbC5jb20iLCJuYW1lIjoiQW5zaHVsIE1va2hhbGUiLCJpYXQiOjE3MTg3MDUxNzQsImV4cCI6MTcxODc5MTU3NH0.kiBYMt24ZZGVXsJbI6TbnF-rsU_4uK6vbGxjUFYv2KY',
+                    'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({ recipeId })
@@ -117,9 +123,37 @@ export const PostProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         }
     };
 
+    const viewAllPostedRecipes = async (): Promise<{ status: string, message?: string, posts?: Post[] }> => {
+
+        const userData = localStorage.getItem('user');
+        const parsedUser = userData ? JSON.parse(userData) : null;
+        const token = parsedUser.token;
+
+        try {
+            const response = await fetch(`https://cookup-backend.onrender.com/api/v1/recipe/view-recipe`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({})
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                return { status: 'error', message: errorData.message || 'An error occurred during fetching data' };
+            }
+
+            const data = await response.json();
+            return { status: 'success', posts: data.data };
+        } catch (error: any) {
+            return { status: 'error', message: error.message || 'An error occurred during fetching data' };
+        }
+    };
+
 
     return (
-        <PostContext.Provider value={{ createPost, getAllPost, viewPost }}>
+        <PostContext.Provider value={{ createPost, getAllPost, viewPost, viewAllPostedRecipes }}>
             {children}
         </PostContext.Provider>
     );
