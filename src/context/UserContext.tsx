@@ -115,9 +115,9 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
                 body: JSON.stringify({ userId })
             });
 
-            if (!response.ok) {
-                throw new Error('No data found');
-            }
+            // if (!response.ok) {
+            //     throw new Error('No data found');
+            // }
             const data = await response.json();
             return data.data;
         } catch (error: any) {
