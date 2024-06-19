@@ -45,6 +45,7 @@ const RecipePage: React.FC = () => {
             if (recipe && recipe.userId) {
                 try {
                     const newResult = await getUser(recipe.userId);
+                    console.log(recipe.userId);
                     console.log(newResult);
                     setUsername(newResult);
                 } catch (error: any) {
