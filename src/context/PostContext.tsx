@@ -127,16 +127,15 @@ export const PostProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
         const userData = localStorage.getItem('user');
         const parsedUser = userData ? JSON.parse(userData) : null;
-        const token = parsedUser.token;
+        const token = parsedUser._id;
 
         try {
-            const response = await fetch(`https://cookup-backend.onrender.com/api/v1/recipe/view-recipe`, {
+            const response = await fetch(`https://cookup-backend.onrender.com/api/v1/recipe/get-user-post`, {
                 method: 'POST',
                 headers: {
-                    'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({})
+                body: JSON.stringify({ token })
             });
 
             if (!response.ok) {
