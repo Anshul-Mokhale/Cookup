@@ -59,13 +59,14 @@ const ViewPost: React.FC = () => {
 
                 <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                     <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
-                        <div className="mb-4.5 flex items-center justify-center">
-                            <img src={recipeimg} alt="demo image" />
-                        </div>
+
                         {loading && <p>Loading...</p>}
                         {error && <p>{error}</p>}
                         {recipe && (
                             <>
+                                <div className="mb-4.5 flex items-center justify-center">
+                                    <img src={recipe.recipeImage} alt="demo image" />
+                                </div>
                                 <h1 className="font-medium text-center text-black font-bold text-4xl dark:text-white mb-4.5">
                                     {recipe.title}
                                 </h1>
