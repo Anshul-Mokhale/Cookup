@@ -34,20 +34,22 @@ const SearchResultsPage: React.FC = () => {
 
     return (
         <Layout>
-            <div>
-                <h1>Search Results for: {searchQuery}</h1>
-                <p>Total Results: {recipes.length}</p>
+            <div className="p-8 dark:bg-boxdark-2">
+                <h1 className="text-black dark:text-white font-bold text-2xl">Search Results for: {searchQuery}</h1>
+                <p className=" mt-2">Total Results: {recipes.length}</p>
                 {/* Display search results */}
                 {recipes.map((recipe) => (
-                    <div key={recipe._id}>
-                        <img src={recipe.recipeImage} alt={recipe.title} style={{ maxWidth: "200px" }} />
-                        <h2>{recipe.title}</h2>
-                        <p>{recipe.description}</p>
-                        {/* Add more details if needed */}
+                    <div key={recipe._id} className="mt-6 flex items-center">
+                        <img src={recipe.recipeImage} alt={recipe.title} className="w-32 h-32 mr-4 rounded-lg" />
+                        <div>
+                            <h2 className="text-lg font-semibold text-black dark:text-white">{recipe.title}</h2>
+                            <p className="text-gray-600 dark:text-gray-400">{recipe.description}</p>
+                            {/* Add more details if needed */}
+                        </div>
                     </div>
                 ))}
                 {/* Display error if any */}
-                {error && <div>Error: {error}</div>}
+                {error && <div className="mt-6 text-red-500">{error}</div>}
             </div>
         </Layout>
     );
