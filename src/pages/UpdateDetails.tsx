@@ -66,7 +66,6 @@ const UpdateDetails: React.FC = () => {
                                 onChange={(e) => setDescription(e.target.value)}
                                 placeholder="Enter Here Descripiton"
                                 className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                                required
                             ></textarea>
                         </div>
                         <div className="mb-4.5">
@@ -79,7 +78,7 @@ const UpdateDetails: React.FC = () => {
                                 onChange={(e) => setIngredient(e.target.value)}
                                 placeholder="Enter Here ingredients"
                                 className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                                required
+
                             ></textarea>
                         </div>
                         <div className="mb-4.5">
@@ -92,7 +91,7 @@ const UpdateDetails: React.FC = () => {
                                 onChange={(e) => setSteps(e.target.value)}
                                 placeholder="Enter here steps"
                                 className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                                required
+
                             ></textarea>
                         </div>
 
