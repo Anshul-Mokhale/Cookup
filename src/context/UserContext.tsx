@@ -104,7 +104,6 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     };
 
     const getUser = async (userId: string): Promise<{ status: string, message?: string }> => {
-
         if (!userId) {
             throw new Error('No userId found');
         }
@@ -112,18 +111,25 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         try {
             const response = await fetch(`https://cookup-backend.onrender.com/api/v1/users/get-user-name`, {
                 method: 'POST',
-                body: JSON.stringify({ userId })
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ userId }),
             });
 
-            // if (!response.ok) {
-            //     throw new Error('No data found');
-            // }
+            if (!response.ok) {
+                const errorData = await response.json();
+                console.log(errorData);
+                throw new Error(errorData.message || 'An error occurred during fetching name');
+            }
+
             const data = await response.json();
             return data.data;
         } catch (error: any) {
             return { status: 'error', message: error.message || 'An error occurred during fetching name' };
         }
-    }
+    };
+
 
     return (
         <UserContext.Provider value={{ user, login, register, logout, getUser }}>
