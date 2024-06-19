@@ -157,7 +157,7 @@ export const PostProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         const token = parsedUser ? parsedUser.token : null; // Get token from parsed user
 
         try {
-            const response = await fetch(`https://cookup-backend.onrender.com/api/v1/recipe/delete-post`, {
+            const response = await fetch(`https://cookup-backend.onrender.com/api/v1/recipe/delete-recipe`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${token}`, // Use token from parsed user
@@ -172,7 +172,7 @@ export const PostProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
                 throw new Error(data.message || 'An error occurred during deletion');
             }
 
-            return { status: 'success', message: data.message || 'Post deleted successfully' };
+            return { status: 'success', message: 'Post deleted successfully' };
         } catch (error: any) {
             return { status: 'error', message: error.message || 'An error occurred during deletion' };
         }
