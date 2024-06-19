@@ -48,7 +48,7 @@ const RecipePage: React.FC = () => {
                     console.log(recipe.userId);
                     console.log(typeof (recipe.userId));
                     console.log(newResult);
-                    setUsername(newResult);
+                    setUsername(newResult.name);
                 } catch (error: any) {
                     setError(error.message || "An error occurred during fetching user data.");
                 }
