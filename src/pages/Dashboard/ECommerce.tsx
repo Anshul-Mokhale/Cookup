@@ -9,6 +9,7 @@ const ECommerce: React.FC = () => {
   const [posts, setPosts] = useState<Post[]>([]);
   const { viewAllPostedRecipes, deletePost } = usePost();
 
+
   useEffect(() => {
     const fetchPosts = async () => {
       try {
@@ -49,8 +50,12 @@ const ECommerce: React.FC = () => {
 
       if (status === 'success') {
         // Refresh posts after successful deletion
-        const { posts } = await viewAllPostedRecipes();
-        setPosts(posts || []);
+        const { status, message, posts } = await viewAllPostedRecipes();
+        if (status === 'success') {
+          setPosts(posts || []);
+        } else {
+          setMsg(message || 'Failed to fetch posts');
+        }
         setMsg(message || 'Post deleted successfully');
       } else {
         setMsg(message || 'Failed to delete post');
