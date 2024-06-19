@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { usePost } from "../../context/PostContext";
-
+import Layout from "../Layout";
 
 const SearchResultsPage: React.FC = () => {
     const [searchQuery, setSearchQuery] = useState<string>("");
     const [recipes, setRecipes] = useState<Post[]>([]);
     const [error, setError] = useState<string | null>(null);
     const location = useLocation();
-    const { searchQuer } = usePost();
+    const { searchQuery: searchRecipes } = usePost();
 
     useEffect(() => {
         const query = new URLSearchParams(location.search).get("query") || "";
@@ -20,9 +20,10 @@ const SearchResultsPage: React.FC = () => {
 
     const fetchSearchResults = async (query: string) => {
         try {
-            const result = await searchQuer(query);
+            const result = await searchRecipes(query);
             if (result.status === "success" && result.posts) {
                 setRecipes(result.posts);
+                setError(null);
             } else {
                 setError(result.message || "No recipes found");
             }
@@ -32,18 +33,23 @@ const SearchResultsPage: React.FC = () => {
     };
 
     return (
-        <div>
-            <h1>Search Results for: {searchQuery}</h1>
-            {/* Display search results */}
-            {recipes.map((recipe) => (
-                <div key={recipe._id}>
-                    {/* Display recipe details */}
-                    <h1>Recipes</h1>
-                </div>
-            ))}
-            {/* Display error if any */}
-            {error && <div>Error: {error}</div>}
-        </div>
+        <Layout>
+            <div>
+                <h1>Search Results for: {searchQuery}</h1>
+                <p>Total Results: {recipes.length}</p>
+                {/* Display search results */}
+                {recipes.map((recipe) => (
+                    <div key={recipe._id}>
+                        {/* Display recipe details */}
+                        <img src={recipe.recipeImage} alt={recipe.title} style={{ maxWidth: "200px" }} />
+                        <h2>{recipe.title}</h2>
+                        {/* Display other recipe details as needed */}
+                    </div>
+                ))}
+                {/* Display error if any */}
+                {error && <div>Error: {error}</div>}
+            </div>
+        </Layout>
     );
 };
 
