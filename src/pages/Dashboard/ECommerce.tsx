@@ -135,8 +135,6 @@ const ECommerce: React.FC = () => {
                   </td>
                   <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                     <Link to={`/user/post/view-post/${post._id}`} className="hover:text-primary">View</Link>
-                  </td>
-                  <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                     <button onClick={() => handleDeletePost(post._id)}>Delete</button>
                   </td>
                 </tr>

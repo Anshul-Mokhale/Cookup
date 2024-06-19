@@ -158,7 +158,7 @@ export const PostProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
         try {
             const response = await fetch(`https://cookup-backend.onrender.com/api/v1/recipe/delete-recipe`, {
-                method: 'DELETE',
+                method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`, // Use token from parsed user
                     'Content-Type': 'application/json'
