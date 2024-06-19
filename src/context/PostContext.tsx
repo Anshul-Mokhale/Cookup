@@ -98,15 +98,15 @@ export const PostProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
     const viewPost = async (recipeId: string): Promise<{ status: string, message?: string, posts?: Post[] }> => {
 
-        const userData = localStorage.getItem('user');
-        const parsedUser = userData ? JSON.parse(userData) : null;
-        const token = parsedUser.token;
+        // const userData = localStorage.getItem('user');
+        // const parsedUser = userData ? JSON.parse(userData) : null;
+        // const token = parsedUser.token;
 
         try {
             const response = await fetch(`https://cookup-backend.onrender.com/api/v1/recipe/view-recipe`, {
                 method: 'POST',
                 headers: {
-                    'Authorization': `Bearer ${token}`,
+                    // 'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({ recipeId })
