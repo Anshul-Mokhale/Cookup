@@ -160,9 +160,9 @@ const UpdateImage: React.FC = () => {
             setErrorMessage(response.message || "An error occurred during creating post.");
         } else {
             // handle successful post creation (e.g., redirect to the posts list, reset the form, etc.)
-            console.log("Post created successfully:", response);
-            console.log(errorMessage);
-            localStorage.setItem('action', 'success');
+            // console.log("Post created successfully:", response);
+            // console.log(errorMessage);
+            // localStorage.setItem('action', 'success');
             navigate('/user/dashboard');
         }
     };

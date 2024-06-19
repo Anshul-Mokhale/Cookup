@@ -21,7 +21,7 @@ const ECommerce: React.FC = () => {
           setMsg(message || 'Failed to fetch posts');
         }
       } catch (error) {
-        console.error('Error fetching posts:', error);
+        // console.error('Error fetching posts:', error);
         setMsg('An error occurred while fetching posts');
       } finally {
         setLoading(false);
@@ -65,7 +65,7 @@ const ECommerce: React.FC = () => {
         setMsg(message || 'Failed to delete post');
       }
     } catch (error) {
-      console.error('Error deleting post:', error);
+      // console.error('Error deleting post:', error);
       setMsg('An error occurred while deleting post');
     }
   };

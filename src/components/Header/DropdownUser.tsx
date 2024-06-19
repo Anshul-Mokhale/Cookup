@@ -15,13 +15,13 @@ const DropdownUser = () => {
   const logOt = async () => {
     setIsAuthenticated(false);
     logout();
-    console.log("logout");
+    // console.log("logout");
   }
 
 
   const user = localStorage.getItem('user');
   const parsedUser = user ? JSON.parse(user) : null;
-  console.log(parsedUser.avatar);
+  // console.log(parsedUser.avatar);
 
   // close on click outside
   useEffect(() => {

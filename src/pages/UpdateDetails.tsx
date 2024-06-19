@@ -1,7 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
 import DefaultLayout from "../layout/DefaultLayout";
+import { usePost } from "../context/PostContext";
+import { useNavigate, useParams } from "react-router-dom";
 
 const UpdateDetails: React.FC = () => {
+    const { id } = useParams();
+    const { updatePostDetails } = usePost();
+    const [title, setTitle] = useState<string>('');
+    const [description, setDescription] = useState<string>('');
+    const [ingredient, setIngredient] = useState<string>('');
+    const [steps, setSteps] = useState<string>('');
+    const [errorMessage, setErrorMessage] = useState<string>('');
+    const navigate = useNavigate();
+    const handleSubmit = async (event: React.FormEvent) => {
+        event.preventDefault();
+
+        if (!title || !description || !ingredient || !steps) {
+            setErrorMessage("All fields are required.");
+            return;
+        }
+        const recipeId = id || "";
+
+        const response = await updatePostDetails(recipeId, title, description, ingredient, steps);
+
+        if (response.status === "error") {
+            setErrorMessage(response.message || "An error occurred during creating post.");
+            console.log(errorMessage);
+        } else {
+            // handle successful post creation (e.g., redirect to the posts list, reset the form, etc.)
+            // console.log("Post created successfully:", response);
+            // localStorage.setItem('action', 'success');
+            navigate('/user/dashboard');
+        }
+    };
     return (
         <DefaultLayout>
             <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
@@ -10,7 +41,7 @@ const UpdateDetails: React.FC = () => {
                         Update Post Details
                     </h3>
                 </div>
-                <form action="#">
+                <form onSubmit={handleSubmit}>
                     <div className="p-6.5">
 
                         <div className="mb-4.5">
@@ -19,6 +50,8 @@ const UpdateDetails: React.FC = () => {
                             </label>
                             <input
                                 type="text"
+                                value={title}
+                                onChange={(e) => setTitle(e.target.value)}
                                 placeholder="Enter title of recipe"
                                 className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                             />
@@ -29,6 +62,8 @@ const UpdateDetails: React.FC = () => {
                             </label>
                             <textarea
                                 rows={6}
+                                value={description}
+                                onChange={(e) => setDescription(e.target.value)}
                                 placeholder="Enter Here Descripiton"
                                 className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                                 required
@@ -40,6 +75,8 @@ const UpdateDetails: React.FC = () => {
                             </label>
                             <textarea
                                 rows={6}
+                                value={ingredient}
+                                onChange={(e) => setIngredient(e.target.value)}
                                 placeholder="Enter Here ingredients"
                                 className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                                 required
@@ -51,6 +88,8 @@ const UpdateDetails: React.FC = () => {
                             </label>
                             <textarea
                                 rows={6}
+                                value={steps}
+                                onChange={(e) => setSteps(e.target.value)}
                                 placeholder="Enter here steps"
                                 className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                                 required

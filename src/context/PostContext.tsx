@@ -30,6 +30,11 @@ interface PostContextType {
     deletePost: (recipeId: string) => Promise<{ status: string, message?: string, name?: string }>;
     searchQuer: (query: string) => Promise<{ status: string; message?: string; posts?: Post[] }>;
     udpatePostImage: (image: File, recipeId: string) => Promise<{ status: string, message?: string, name?: string }>;
+    updatePostDetails: (recipeId: string,
+        title: string,
+        description: string,
+        ingredient: string,
+        steps: string) => Promise<{ status: string, message?: string, name?: string }>;
 }
 
 // Create the PostContext
@@ -239,12 +244,42 @@ export const PostProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         }
     }
 
+    const updatePostDetails = async (recipeId: string, title: string,
+        description: string,
+        ingredient: string,
+        steps: string,): Promise<{ status: string, message?: string, name?: string }> => {
+        const userData = localStorage.getItem('user');
+        const parsedUser = userData ? JSON.parse(userData) : null;
+        const token = parsedUser ? parsedUser.token : null; // Get token from parsed user
 
+        const recipe_id = recipeId;
+
+        try {
+            const response = await fetch(`https://cookup-backend.onrender.com/api/v1/recipe/update-details`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`, // Use token from parsed user
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ title, description, ingredient, steps, recipe_id })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message || 'An error occurred during deletion');
+            }
+
+            return { status: 'success', message: 'Post deleted successfully' };
+        } catch (error: any) {
+            return { status: 'error', message: error.message || 'An error occurred during deletion' };
+        }
+    };
 
 
 
     return (
-        <PostContext.Provider value={{ createPost, getAllPost, viewPost, viewAllPostedRecipes, deletePost, searchQuer, udpatePostImage }}>
+        <PostContext.Provider value={{ createPost, getAllPost, viewPost, viewAllPostedRecipes, deletePost, searchQuer, udpatePostImage, updatePostDetails }}>
             {children}
         </PostContext.Provider>
     );
