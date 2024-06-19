@@ -57,6 +57,10 @@ const ECommerce: React.FC = () => {
           setMsg(message || 'Failed to fetch posts');
         }
         setMsg(message || 'Post deleted successfully');
+        const timers = setTimeout(() => {
+          setMsg('');
+        }, 3000);
+        return () => clearTimeout(timers);
       } else {
         setMsg(message || 'Failed to delete post');
       }
