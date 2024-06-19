@@ -15,7 +15,7 @@ const UpdateDetails: React.FC = () => {
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
 
-        console.log("prepared the request for sending to backend");
+        // console.log("prepared the request for sending to backend");
 
         const recipeId = id || "";
 
