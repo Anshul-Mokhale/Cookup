@@ -102,7 +102,7 @@ const ECommerce: React.FC = () => {
               {posts.map((post, index) => (
                 <tr key={index}>
                   <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
-                    <img src={post.image} alt={post.title} className="w-20 h-20 object-cover rounded-md" />
+                    <img src={post.recipeImage} alt={post.title} className="w-20 h-20 object-cover rounded-md" />
                   </td>
                   <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                     <p className="text-black dark:text-white">{post.title}</p>
