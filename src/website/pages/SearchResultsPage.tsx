@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { usePost } from "../../context/PostContext";
 import Layout from "../Layout";
 
@@ -39,14 +39,14 @@ const SearchResultsPage: React.FC = () => {
                 <p className=" mt-2">Total Results: {recipes.length}</p>
                 {/* Display search results */}
                 {recipes.map((recipe) => (
-                    <div key={recipe._id} className="mt-6 flex items-center">
+                    <Link to={`/view-recipe/${recipe._id}`} key={recipe._id} className="mt-6 flex items-center p-4 bg-white dark:bg-boxdark">
                         <img src={recipe.recipeImage} alt={recipe.title} className="w-32 h-32 mr-4 rounded-lg" />
                         <div>
                             <h2 className="text-lg font-semibold text-black dark:text-white">{recipe.title}</h2>
                             <p className="text-gray-600 dark:text-gray-400">{recipe.description}</p>
                             {/* Add more details if needed */}
                         </div>
-                    </div>
+                    </Link>
                 ))}
                 {/* Display error if any */}
                 {error && <div className="mt-6 text-red-500">{error}</div>}
