@@ -270,9 +270,9 @@ export const PostProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
                 throw new Error(data.message || 'An error occurred during deletion');
             }
 
-            return { status: 'success', message: 'Post deleted successfully' };
+            return { status: 'success', message: 'Post updated successfully' };
         } catch (error: any) {
-            return { status: 'error', message: error.message || 'An error occurred during deletion' };
+            return { status: 'error', message: error.message || 'An error occurred during updateinon' };
         }
     };
 

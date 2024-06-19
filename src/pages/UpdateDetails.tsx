@@ -15,10 +15,8 @@ const UpdateDetails: React.FC = () => {
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
 
-        if (!title || !description || !ingredient || !steps) {
-            setErrorMessage("All fields are required.");
-            return;
-        }
+        console.log("prepared the request for sending to backend");
+
         const recipeId = id || "";
 
         const response = await updatePostDetails(recipeId, title, description, ingredient, steps);
