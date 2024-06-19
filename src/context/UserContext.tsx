@@ -119,7 +119,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
                 throw new Error('No data found');
             }
             const data = await response.json();
-            return data.name;
+            return data.data;
         } catch (error: any) {
             return { status: 'error', message: error.message || 'An error occurred during fetching name' };
         }
