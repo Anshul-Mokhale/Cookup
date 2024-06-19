@@ -27,6 +27,7 @@ interface PostContextType {
     getAllPost: () => Promise<{ status: string, message?: string, posts?: Post[] }>;
     viewPost: (recipeId: string) => Promise<{ status: string; message?: string; posts?: Post[] }>;
     viewAllPostedRecipes: () => Promise<{ status: string; message?: string; posts?: Post[] }>;
+    deletePost: (recipeId: string) => Promise<{ status: string, message?: string, name?: string }>;
 }
 
 // Create the PostContext
@@ -149,10 +150,38 @@ export const PostProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         }
     };
 
+    const deletePost = async (recipeId: string): Promise<{ status: string, message?: string, name?: string }> => {
+        const userData = localStorage.getItem('user');
+        const parsedUser = userData ? JSON.parse(userData) : null;
+        const userId = parsedUser ? parsedUser._id : null;
+
+        try {
+            const response = await fetch(`https://cookup-backend.onrender.com/api/v1/recipe/delete-post`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${parsedUser.token}`, // Use token from parsed user
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ userId, recipeId })
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                return { status: 'error', message: errorData.message || 'An error occurred during deletion' };
+            }
+
+            const data = await response.json();
+            return { status: 'success', message: data.message || 'Post deleted successfully' };
+        } catch (error: any) {
+            return { status: 'error', message: error.message || 'An error occurred during deletion' };
+        }
+    };
+
+
 
 
     return (
-        <PostContext.Provider value={{ createPost, getAllPost, viewPost, viewAllPostedRecipes }}>
+        <PostContext.Provider value={{ createPost, getAllPost, viewPost, viewAllPostedRecipes, deletePost }}>
             {children}
         </PostContext.Provider>
     );

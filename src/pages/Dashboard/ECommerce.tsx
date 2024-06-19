@@ -7,7 +7,7 @@ const ECommerce: React.FC = () => {
   const [msg, setMsg] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(true);
   const [posts, setPosts] = useState<Post[]>([]);
-  const { viewAllPostedRecipes } = usePost();
+  const { viewAllPostedRecipes, deletePost } = usePost();
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -42,6 +42,24 @@ const ECommerce: React.FC = () => {
       return () => clearTimeout(timer);
     }
   }, []);
+
+  const handleDeletePost = async (postId: string) => {
+    try {
+      const { status, message } = await deletePost(postId);
+
+      if (status === 'success') {
+        // Refresh posts after successful deletion
+        const { posts } = await viewAllPostedRecipes();
+        setPosts(posts || []);
+        setMsg(message || 'Post deleted successfully');
+      } else {
+        setMsg(message || 'Failed to delete post');
+      }
+    } catch (error) {
+      console.error('Error deleting post:', error);
+      setMsg('An error occurred while deleting post');
+    }
+  };
 
   return (
     <DefaultLayout>
@@ -112,6 +130,9 @@ const ECommerce: React.FC = () => {
                   </td>
                   <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                     <Link to={`/user/post/view-post/${post._id}`} className="hover:text-primary">View</Link>
+                  </td>
+                  <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                    <button onClick={() => handleDeletePost(post._id)}>Delete</button>
                   </td>
                 </tr>
               ))}
