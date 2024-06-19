@@ -250,8 +250,8 @@ module.exports = {
         'spin-3': 'spin 3s linear infinite',
       },
       borderRadius: {
-        'rounded-custom': '50%'
-      }
+        'customradius': '50%',
+      },
     },
   },
   plugins: [],
